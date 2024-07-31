@@ -1,0 +1,37 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 5%;
+}
+
+table {
+    table-layout: fixed;
+    width: 100%;
+    /* border-collapse: collapse; */
+    /* border: 3px solid none; */
+}
+
+
+th, tr {
+    text-align: left;
+}
+th {
+    background-color: gray;
+}
+
+th:nth-child(1) {
+    min-width: 40%;
+}
+
+th:nth-child(2) {
+    min-width: 40%;
+}
+
+th:nth-child(3) {
+    min-width: 20%;
+}
+
+tr {
+    padding-left: 1em;
+    padding-right: 1em;
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<head lang="ja">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>ToDo リスト</title>
+    <!-- reset.css modern-css-reset -->
+    <link rel="stylesheet" href="https://unpkg.com/modern-css-reset/dist/reset.min.css" />
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <h2>ToDoリスト</h2>
+    <form id="js-new-form">
+        <input
+            id="js-new-title"
+            type="text"
+            placeholder="タイトルを入力"
+        />
+        <input
+            id="js-new-startDateTime"
+            type="datetime-local"
+            placeholder="開始日時"
+        />
+    </form>
+    <table id="js-todo-table">
+        <tr>
+            <th>タイトル<br>(<code>title</code>)</th>
+            <th>開始日時<br>(<code>startDateTime)</code></th>
+            <th>完了フラグ<br>(<code>completed</code>)</th>
+        </tr>
+    </table>
+    <script src="index.js"></script>
+</body>
