@@ -39,10 +39,20 @@ window.addEventListener("load", () => {
                 checkbox.checked = value;
                 checkbox.addEventListener("change", (event) => {
                     todo.completed = event.target.checked;
+                    const titleTd = tr.querySelector("td.title");
+                    if (event.target.checked) {
+                        titleTd.style.textDecoration = "line-through";
+                    } else {
+                        titleTd.style.textDecoration = "none";
+                    }
                 });
                 td.appendChild(checkbox);
             } else {
                 td.textContent = value;
+                // タイトルが完了済みの場合は取り消し線を追加
+                if (key === "title" && todo.completed) {
+                    td.style.textDecoration = "line-through";
+                }
             }
             td.classList.add(key);
             tr.appendChild(td);
@@ -101,12 +111,20 @@ formE.addEventListener("submit", (ev) => {
             const checkbox = document.createElement("input");
             checkbox.type = "checkbox";// チェックボックスのタイプを設定
             checkbox.checked = value;// 初期状態を設定
+            // チェックボックスの状態が変更されたときに完了状態を更新
             checkbox.addEventListener("change", (event) => {
-                // チェックボックスの状態が変更されたときに完了状態を更新
                 newTodo.completed = event.target.checked;
                 // ローカルストレージ内のToDoリストを更新
                 todoItems.find((todo) => todo.id === newTodo.id).completed = event.target.checked;
                 localStorage.setItem(STORAGE_KEYS.TODOITEMS, JSON.stringify(todoItems));
+
+                // タイトルのセルに取り消し線を追加
+                const titleTd = tr.querySelector("td.title");// タイトルのセルを取得
+                if (event.target.checked) {
+                    titleTd.style.textDecoration = "line-through";// 取り消し線を追加
+                } else {
+                    titleTd.style.textDecoration = "none";// 取り消し線を削除
+                }   
             });
             td.appendChild(checkbox); // チェックボックスをセルに追加
         } else {
