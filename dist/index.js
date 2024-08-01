@@ -42,26 +42,26 @@ formE.addEventListener("submit", (ev) => {
 
     // 新しい行をテーブルに追加
     const tr = document.createElement("tr");
-    for(const [k, v] of Object.entries(newTodo)) {
-        console.log(`${k}: ${v}`);
+    for(const [key, value] of Object.entries(newTodo)) {
+        console.log(`${key}: ${value}`);
 
         const td = document.createElement("td");
 
-        if (k === "completed") {
+        if (key === "completed") {
             // 完了チェックボックスを追加
             const checkbox = document.createElement("input");
             checkbox.type = "checkbox";// チェックボックスのタイプを設定
-            checkbox.checked = v;// 初期状態を設定
+            checkbox.checked = value;// 初期状態を設定
             checkbox.addEventListener("change", (event) => {
                 // チェックボックスの状態が変更されたときに完了状態を更新
                 newTodo.completed = event.target.checked;
             });
             td.appendChild(checkbox); // チェックボックスをセルに追加
         } else {
-            td.textContent = v;// その他のプロパティはテキストとしてセルに追加
+            td.textContent = value;// その他のプロパティはテキストとしてセルに追加
         }
 
-        td.classList.add(k);
+        td.classList.add(key);
         tr.appendChild(td);
     }
     tableE.append(tr);
