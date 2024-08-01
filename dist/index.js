@@ -29,7 +29,9 @@ window.addEventListener("load", () => {
     // TODO: テーブルの行を作成して追加する処理が重複しているので、関数化する
     todoItems.forEach((todo) => {
         const tr = document.createElement("tr");
-        for (const [key, value] of Object.entries(todo)) {
+        ["completed", "title", "startDateTime", "remainTime"].forEach(key => {
+            const value = todo[key];
+        //for (const [key, value] of Object.entries(todo)) {
             const td = document.createElement("td");
             if (key === "completed") {
                 const checkbox = document.createElement("input");
@@ -44,7 +46,7 @@ window.addEventListener("load", () => {
             }
             td.classList.add(key);
             tr.appendChild(td);
-        }
+        });
         table.appendChild(tr);
     });
 });
@@ -85,8 +87,11 @@ formE.addEventListener("submit", (ev) => {
     localStorage.setItem(STORAGE_KEYS.TODOITEMS, JSON.stringify(todoItems));
 
     // 新しい行をテーブルに追加
-    const tr = document.createElement("tr");
-    for(const [key, value] of Object.entries(newTodo)) {
+    const tr = document.createElement("tr");// 行を作成
+
+    ["completed", "title", "startDateTime", "remainTime"].forEach(key => {
+        const value = newTodo[key];
+    //for(const [key, value] of Object.entries(newTodo)) {
         console.log(`${key}: ${value}`);
 
         const td = document.createElement("td");
@@ -109,8 +114,8 @@ formE.addEventListener("submit", (ev) => {
         }
 
         td.classList.add(key);
-        tr.appendChild(td);
-    }
+        tr.appendChild(td); // セルを行に追加
+    });
     tableE.append(tr);
 
     // 1秒ごとに残り時間を更新
