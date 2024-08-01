@@ -1,4 +1,10 @@
 "use strict";
+/**
+ * ローカルストレージのキー
+ */
+const STORAGE_KEYS = {
+    TODOITEMS: "todo-items"
+}
 
 // フォームと入力フィールド、テーブル要素を取得
 const formE = document.querySelector("#js-new-form");
@@ -6,6 +12,42 @@ const inputTitleE = document.querySelector("#js-new-title");
 const inputStartDateTimeE = document.querySelector("#js-new-startDateTime");
 const tableE = document.querySelector("#js-todo-table");
 
+/**
+ * ToDo項目の配列
+ * @type {Object[]}
+ */
+const todoItems = [];
+
+// ページ読み込み時にローカルストレージからToDoリストを取得
+window.addEventListener("load", () => {
+    // ローカルストレージからToDoリストを取得
+    const storedTodoItems = localStorage.getItem(STORAGE_KEYS.TODOITEMS);
+    if (storedTodoItems) {
+        todoItems.push(...JSON.parse(storedTodoItems));
+    }
+    const table = document.querySelector("#js-todo-table");
+    // TODO: テーブルの行を作成して追加する処理が重複しているので、関数化する
+    todoItems.forEach((todo) => {
+        const tr = document.createElement("tr");
+        for (const [key, value] of Object.entries(todo)) {
+            const td = document.createElement("td");
+            if (key === "completed") {
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.checked = value;
+                checkbox.addEventListener("change", (event) => {
+                    todo.completed = event.target.checked;
+                });
+                td.appendChild(checkbox);
+            } else {
+                td.textContent = value;
+            }
+            td.classList.add(key);
+            tr.appendChild(td);
+        }
+        table.appendChild(tr);
+    });
+});
 
 // 開始日時の初期値を現在の日時に設定
 window.addEventListener("load", () => {
@@ -39,6 +81,8 @@ formE.addEventListener("submit", (ev) => {
         remainTime
     }
     console.table(newTodo);// コンソールに表示
+    todoItems.push(newTodo);
+    localStorage.setItem(STORAGE_KEYS.TODOITEMS, JSON.stringify(todoItems));
 
     // 新しい行をテーブルに追加
     const tr = document.createElement("tr");
@@ -55,6 +99,9 @@ formE.addEventListener("submit", (ev) => {
             checkbox.addEventListener("change", (event) => {
                 // チェックボックスの状態が変更されたときに完了状態を更新
                 newTodo.completed = event.target.checked;
+                // ローカルストレージ内のToDoリストを更新
+                todoItems.find((todo) => todo.id === newTodo.id).completed = event.target.checked;
+                localStorage.setItem(STORAGE_KEYS.TODOITEMS, JSON.stringify(todoItems));
             });
             td.appendChild(checkbox); // チェックボックスをセルに追加
         } else {
