@@ -9,7 +9,12 @@ const tableE = document.querySelector("#js-todo-table");
 // 開始日時の初期値を現在の日時に設定
 window.addEventListener("load", () => {
     const now = new Date();
-    const str = now.toISOString().match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/)[0]; // YYYY-MM-DD
+	let [_, year, month, day, hour, minute] = now.toLocaleString().match(/(\d{4})\/(\d{1,2})\/(\d{1,2})\s(\d{1,2}):(\d{1,2})/);
+    month = month.padStart(2, "0");
+    day = day.padStart(2, "0");
+    hour = hour.padStart(2, "0");
+    minute = minute.padStart(2, "0");
+    const str = `${year}-${month}-${day}T${hour}:${minute}`;
     document.querySelector("#js-new-startDateTime").value = str;
 });
 
