@@ -19,11 +19,13 @@ formE.addEventListener("submit", (ev) => {
     const title = inputTitleE.value;
     inputTitleE.value = ""; // 入力を消去
     const startDateTime = inputStartDateTimeE.value;
+    let remainTime = updateTime();
 
     const newTodo = {
         title,
         startDateTime,
-        completed: false
+        completed: false,
+        remainTime
     }
     console.table(newTodo);
 
@@ -33,7 +35,25 @@ formE.addEventListener("submit", (ev) => {
 
         const td = document.createElement("td");
         td.textContent = v;
+        td.classList.add(k);
         tr.appendChild(td);
     }
     tableE.append(tr);
+
+    setInterval(() => {
+        remainTime = updateTime();
+        const remainTimeTd = tr.querySelector("td.remainTime");
+        remainTimeTd.textContent = remainTime;
+    }, 1000);
 })
+
+// とりあえずの日時を設定
+const targetTime = new Date('2024-08-04T00:00+09:00').getTime();
+
+const updateTime = () => {
+    const now = new Date();
+    const diff = targetTime - now;
+    const diffSec = Math.floor(diff / 1000);
+
+    return diffSec;
+};
