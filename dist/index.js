@@ -59,6 +59,8 @@ const updateTime = () => {
     const now = new Date();
     const diff = targetTime - now;
     const diffSec = Math.floor(diff / 1000);
-
-    return diffSec;
+    const remainHour = Math.floor(diffSec / 60 / 60);
+    const remainMinute = Math.floor((diffSec / 60) % 60);
+    const remainSecond = Math.floor(diffSec % 60);
+    return remainHour + "時間" + remainMinute + "分";
 };
