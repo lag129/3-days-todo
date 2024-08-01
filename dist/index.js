@@ -30,13 +30,15 @@ formE.addEventListener("submit", (ev) => {
     inputTitleE.value = ""; // 入力を消去
     const startDateTime = inputStartDateTimeE.value;
     let remainTime = updateTime();// 残り時間を計算
+    let progressBar = progressBarPercent();
 
     // 新しいToDo項目を作成
     const newTodo = {
         title,
         startDateTime,
         completed: false,
-        remainTime
+        remainTime,
+        progressBar
     }
     console.table(newTodo);// コンソールに表示
 
@@ -69,8 +71,11 @@ formE.addEventListener("submit", (ev) => {
     // 1秒ごとに残り時間を更新
     setInterval(() => {
         remainTime = updateTime();
+        progressBar = progressBarPercent();
         const remainTimeTd = tr.querySelector("td.remainTime");
+        const progressBarTd = tr.querySelector("td.progressBar");
         remainTimeTd.textContent = remainTime;
+        progressBarTd.textContent = progressBar;
     }, 1000);
 })
 
@@ -85,5 +90,16 @@ const updateTime = () => {
     const remainHour = Math.floor(diffSec / 60 / 60);
     const remainMinute = Math.floor((diffSec / 60) % 60);
     const remainSecond = Math.floor(diffSec % 60);
-    return remainHour + "時間" + remainMinute + "分";
+    return remainHour + "時間" + remainMinute + "分" + remainSecond + "秒";
 };
+
+const progressBarPercent = () => {
+    const currentSec = 193701
+    const goalSec = 3 * 24 * 60 * 60;
+    const widthPercentage = (currentSec / goalSec) * 100;
+    let progressBar = "";
+    for (let i = 0; i < Math.floor(widthPercentage / 10); i++) {
+        progressBar += "□";
+    }
+    return progressBar;
+}
