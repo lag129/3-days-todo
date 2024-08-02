@@ -1,16 +1,16 @@
 "use strict";
-import { TodoList } from "./js/TodoList.js";
 import { TodoItem } from "./js/TodoItem.js";
 import { TodoStorage } from "./js/TodoStorage.js";
 import formatMillisec2HHMMSS from "./js/util/formatMillisec2HHMMSS.js";
 // import { CONSTANTS } from "./js/Constants";
 
 const todoStorage = new TodoStorage();
-const todoList = new TodoList(todoStorage.loadTodoItems());
 
 const renderTodoTable = () => {
     const table = document.querySelector("#js-todo-table");
-    const trs = todoList.generateTRElements();
+    const trs = todoStorage.loadTodoItems().map((item) => {
+        return item.generateTRElement();
+    });
     table.innerHTML = "";
     trs.forEach((tr) => {
         table.appendChild(tr);
@@ -32,7 +32,7 @@ formE.addEventListener("submit", (event) => {
     const title = inputTitleE.value;
     // const startDateTime = inputStartDateTimeE.value;
     const item = new TodoItem({ title: title });
-    todoList.add(item);
+    todoStorage.addTodoItem(item);
     renderTodoTable();
 });
 
