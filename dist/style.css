@@ -1,37 +1,29 @@
+@import url(https://fonts.googleapis.com/earlyaccess/notosansjp.css);
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #f5f5f5;
+    font-family: "Noto Sans JP";
     padding: 5%;
 }
 
 table {
-    table-layout: fixed;
+    margin: 1rem;
     width: 100%;
-    /* border-collapse: collapse; */
-    /* border: 3px solid none; */
-}
-
-
-th, tr {
-    text-align: left;
-}
-th {
-    background-color: gray;
-}
-
-th:nth-child(1) {
-    min-width: 40%;
-}
-
-th:nth-child(2) {
-    min-width: 40%;
-}
-
-th:nth-child(3) {
-    min-width: 20%;
+    /* background-color: # */
+    /* box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.2); */
+    border-collapse: separate;
+    border-spacing: 0px 20px;
 }
 
 tr {
-    padding-left: 1em;
-    padding-right: 1em;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.2);
+    background-color: #f5f5f5;
+}
+
+tr.todo-item-title {
+    overflow: hidden;
+    text-overflow: ellipsis; /* 末尾が...になる */
+    white-space: nowrap;
 }
