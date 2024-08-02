@@ -138,7 +138,9 @@ export class TodoItem {
                 case "EMOJI": {
                     td.classList.add("todo-item-emoji");
                     // remainTimeに応じて絵文字を変更
-                    if (this.remainTime > 1000 * 60 * 60 * 24) { // 1日以上
+                    if (this.isCompleted) {
+                        td.textContent = "🎉"; // 完了した場合の絵文字
+                    } else if (this.remainTime > 1000 * 60 * 60 * 24) { // 1日以上
                         td.textContent = "🙂";
                     } else if (this.remainTime > 1000 * 60 * 60) { // 1時間以上
                         td.textContent = "😅";
