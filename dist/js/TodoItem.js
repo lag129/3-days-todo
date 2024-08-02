@@ -79,6 +79,16 @@ export class TodoItem {
             // td.classList.add(key);
             tr.appendChild(td);
         });
+        // 削除ボタン
+        const removeTd = document.createElement("td");
+        const removeButton = document.createElement("button");
+        removeButton.textContent = "削除";
+        removeButton.addEventListener("click", () => {
+            this.#storage.removeTodoItem(this.id); // ストレージから削除
+            tr.remove(); // 画面から削除
+        });
+        removeTd.appendChild(removeButton);
+        tr.appendChild(removeTd);
         return tr;
     }
 }

@@ -19,6 +19,7 @@ const renderTodoTable = () => {
             <th>タイトル<br>(<code>title</code>)</th>
             <th>作成日時<br>(<code>createdAt</code>)</th>
             <th id="remainTime">残り時間<br>(<code>remainTime</code>)</th>
+            <th 削除></th>
         </tr>
     `;
     trs.forEach((tr) => {
