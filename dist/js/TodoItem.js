@@ -75,7 +75,7 @@ export class TodoItem {
         //         td.textContent = value;
         //     }
         //     // td.classList.add(key);
-        ["COMPLETION_CHECKBOX", "TITLE", "REMAIN_TIME", "REMAIN_PROGRESS", "REMOVE_BUTTON"].forEach((name) => {
+        ["COMPLETION_CHECKBOX", "TITLE", "REMAIN_TIME", "EMOJI", "REMAIN_PROGRESS", "REMOVE_BUTTON"].forEach((name) => {
             const td = document.createElement("td");
             switch (name) {
                 case "COMPLETION_CHECKBOX": {
@@ -121,6 +121,12 @@ export class TodoItem {
                         tr.remove(); // 画面から削除
                     });
                     td.appendChild(removeButton);
+                }; break;
+
+                case "EMOJI": {
+                    td.classList.add("todo-item-emoji");
+                    // 絵文字を
+                    td.textContent = "🍣";
                 }; break;
 
                 default: break;
