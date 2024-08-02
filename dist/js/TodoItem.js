@@ -137,8 +137,16 @@ export class TodoItem {
 
                 case "EMOJI": {
                     td.classList.add("todo-item-emoji");
-                    // 絵文字を追加
-                    td.textContent = "🍣";
+                    // remainTimeに応じて絵文字を変更
+                    if (this.remainTime > 1000 * 60 * 60 * 24) { // 1日以上
+                        td.textContent = "🙂";
+                    } else if (this.remainTime > 1000 * 60 * 60) { // 1時間以上
+                        td.textContent = "😅";
+                    } else if (this.remainTime > 0) { // 1時間未満
+                        td.textContent = "😰";
+                    } else { // 期限切れ
+                        td.textContent = "😡";
+                    }
                 }; break;
 
                 default: break;
