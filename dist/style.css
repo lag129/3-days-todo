@@ -1,9 +1,27 @@
 @import url(https://fonts.googleapis.com/earlyaccess/notosansjp.css);
 
+.container {
+    display: flex;
+    padding: 2%;
+}
+
+.sideBar {
+    width: 20%;
+    padding: 2%;
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+}
+
+.main {
+    width: 80%;
+    padding: 2%;
+}
+
 body {
     background-color: #f5f5f5;
     font-family: "Noto Sans JP";
-    padding: 5%;
+    /* padding: 5%; */
 }
 
 table {
