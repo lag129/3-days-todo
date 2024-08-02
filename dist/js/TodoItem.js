@@ -25,6 +25,7 @@ export class TodoItem {
         }
         const merged = { ...defaults, ...options };
 
+        // プロパティを設定
         this.id = merged.id;
         this.title = merged.title;
         this.isCompleted = merged.isCompleted;
@@ -75,6 +76,8 @@ export class TodoItem {
         //         td.textContent = value;
         //     }
         //     // td.classList.add(key);
+
+        // 各カラムを生成
         ["COMPLETION_CHECKBOX", "TITLE", "REMAIN_TIME", "EMOJI", "REMAIN_PROGRESS", "REMOVE_BUTTON"].forEach((name) => {
             const td = document.createElement("td");
             switch (name) {
@@ -86,6 +89,11 @@ export class TodoItem {
                     checkbox.addEventListener("change", (event) => {
                         this.isCompleted = event.target.checked;
                         this.#storage.updateTodoItem(this.id, this);
+                        // チェックボックスの状態に応じてタイトルに取り消し線を付ける
+                        const titleElement = tr.querySelector(".todo-item-title");
+                        if (titleElement) {
+                            titleElement.style.textDecoration = this.isCompleted ? "line-through" : "none";
+                        }
                     });
                     td.appendChild(checkbox);
                 }; break;
@@ -93,6 +101,10 @@ export class TodoItem {
                 case "TITLE": {
                     td.classList.add("todo-item-title");
                     td.textContent = this.title;
+                    // 初期状態で取り消し線を付ける
+                    if (this.isCompleted) {
+                        td.style.textDecoration = "line-through";
+                    }
                 }; break;
 
                 case "REMAIN_TIME": {
@@ -125,7 +137,7 @@ export class TodoItem {
 
                 case "EMOJI": {
                     td.classList.add("todo-item-emoji");
-                    // 絵文字を
+                    // 絵文字を追加
                     td.textContent = "🍣";
                 }; break;
 
