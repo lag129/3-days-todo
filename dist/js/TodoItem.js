@@ -52,43 +52,82 @@ export class TodoItem {
         const tr = document.createElement("tr");
         tr.classList.add("todo-item");
         tr.id = this.id;
-        ["isCompleted", "title", "createdAt", "remainTime"].forEach((key) => {
-            if (["deadlineAt"].includes(key)) return; // 無視
+        // ["isCompleted", "title", "remainTime"].forEach((key) => {
+        //     if (["deadlineAt"].includes(key)) return; // 無視
 
-            const value = this[key];
+        //     const value = this[key];
+        //     const td = document.createElement("td");
+        //     if (key === "isCompleted") {
+        //         const checkbox = document.createElement("input");
+        //         checkbox.type = "checkbox";
+        //         checkbox.checked = value;
+        //         checkbox.addEventListener("change", (event) => {
+        //             this.isCompleted = event.target.checked;
+        //             this.#storage.updateTodoItem(this.id, this);
+        //         });
+        //         td.appendChild(checkbox);
+        //     } else if (key === "remainTime") {
+        //         td.id = "js-td-remainTime";
+        //         // hh:mm:ss形式にフォーマット
+        //         const formatted = formatMillisec2HHMMSS(this.remainTime);
+        //         td.textContent = formatted;
+        //     } else {
+        //         td.textContent = value;
+        //     }
+        //     // td.classList.add(key);
+        ["COMPLETION_CHECKBOX", "TITLE", "REMAIN_TIME", "REMAIN_PROGRESS", "REMOVE_BUTTON"].forEach((name) => {
             const td = document.createElement("td");
-            if (key === "isCompleted") {
-                const checkbox = document.createElement("input");
-                checkbox.type = "checkbox";
-                checkbox.checked = value;
-                checkbox.addEventListener("change", (event) => {
-                    this.isCompleted = event.target.checked;
-                    this.#storage.updateTodoItem(this.id, this);
-                });
-                td.appendChild(checkbox);
-            } else if (key === "createdAt") {
-                td.textContent = value.toLocaleString();
-            } else if (key === "remainTime") {
-                td.id = "js-td-remainTime";
-                // hh:mm:ss形式にフォーマット
-                const formatted = formatMillisec2HHMMSS(this.remainTime);
-                td.textContent = formatted;
-            } else {
-                td.textContent = value;
+            switch (name) {
+                case "COMPLETION_CHECKBOX": {
+                    td.classList.add("todo-item-completion");
+                    const checkbox = document.createElement("input");
+                    checkbox.type = "checkbox";
+                    checkbox.checked = this.isCompleted;
+                    checkbox.addEventListener("change", (event) => {
+                        this.isCompleted = event.target.checked;
+                        this.#storage.updateTodoItem(this.id, this);
+                    });
+                    td.appendChild(checkbox);
+                }; break;
+
+                case "TITLE": {
+                    td.classList.add("todo-item-title");
+                    td.textContent = this.title;
+                }; break;
+
+                case "REMAIN_TIME": {
+                    // TODO: index.jsのコードと重複している
+                    td.classList.add("todo-item-remainTime");
+                    td.id = "js-td-remainTime";
+                    // hh:mm:ss形式にフォーマット
+                    const formatted = formatMillisec2HHMMSS(this.remainTime);
+                    td.textContent = this.isCompleted ? "完了" : this.remainTime > 0 ? formatted : "期限切れ";
+                }; break;
+
+                case "REMAIN_PROGRESS": {
+                    td.classList.add("todo-item-remainProgress");
+                    const progress = document.createElement("progress");
+                    progress.max = PERIOD_TO_DEADLINE_MSEC;
+                    progress.value = this.remainTime;
+                    td.appendChild(progress);
+                }; break;
+
+                case "REMOVE_BUTTON": {
+                    td.classList.add("todo-item-remove");
+                    const removeButton = document.createElement("button");
+                    removeButton.textContent = "削除";
+                    removeButton.addEventListener("click", () => {
+                        this.#storage.removeTodoItem(this.id); // ストレージから削除
+                        tr.remove(); // 画面から削除
+                    });
+                    td.appendChild(removeButton);
+                }; break;
+
+                default: break;
             }
-            // td.classList.add(key);
             tr.appendChild(td);
         });
-        // 削除ボタン
-        const removeTd = document.createElement("td");
-        const removeButton = document.createElement("button");
-        removeButton.textContent = "削除";
-        removeButton.addEventListener("click", () => {
-            this.#storage.removeTodoItem(this.id); // ストレージから削除
-            tr.remove(); // 画面から削除
-        });
-        removeTd.appendChild(removeButton);
-        tr.appendChild(removeTd);
+
         return tr;
     }
 }

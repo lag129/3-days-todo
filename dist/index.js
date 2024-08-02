@@ -17,9 +17,9 @@ const renderTodoTable = () => {
         <tr>
             <th>完了フラグ<br>(<code>completed</code>)</th>
             <th>タイトル<br>(<code>title</code>)</th>
-            <th>作成日時<br>(<code>createdAt</code>)</th>
             <th id="remainTime">残り時間<br>(<code>remainTime</code>)</th>
-            <th 削除></th>
+            <th>プログレスバー</th>
+            <th>削除ボタン</th>
         </tr>
     `;
     trs.forEach((tr) => {
@@ -60,18 +60,21 @@ formE.addEventListener("submit", (event) => {
 //     document.querySelector("#js-new-startDateTime").value = str;
 // });
 
-// 1秒ごとに各<tr id="<<todoitem.id>>">内の<td id="remainTime">の残り時間を更新
+// 1秒ごとに残り時間を更新
 setInterval(() => {
-    // console.debug("setInterval: update remainTime");
-    const trs = document.querySelectorAll("tr.todo-item");
-    trs.forEach((tr) => {
-        const id = tr.id;
-        const item = todoList.find(id);
-        const remainTimeE = tr.querySelector("#js-td-remainTime");
-        if (!item || !remainTimeE) {
+    console.debug("setInterval: update remainTime");
+    todoList.items.forEach((item) => {
+        const tr = document.getElementById(item.id);
+        if (!tr) {
             return;
         }
+        const remainTimeTD = tr.querySelector(".todo-item-remainTime");
         const formatted = formatMillisec2HHMMSS(item.remainTime);
-        remainTimeE.textContent = formatted;
+        // 残り時間の更新
+        // 完了フラグが立っている場合は「完了」、残り時間が0未満の場合は「期限切れ」と表示
+        remainTimeTD.textContent = item.isCompleted ? "完了" : item.remainTime > 0 ? formatted : "期限切れ";
+        // プログレスバーの更新
+        const progressE = tr.querySelector(".todo-item-remainProgress").querySelector("progress");
+        progressE.attributes["value"].value = item.remainTime;
     });
 }, 1000);
