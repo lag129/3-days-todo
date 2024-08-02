@@ -62,16 +62,5 @@ formE.addEventListener("submit", (event) => {
 
 // 1秒ごとに各<tr id="<<todoitem.id>>">内の<td id="remainTime">の残り時間を更新
 setInterval(() => {
-    // console.debug("setInterval: update remainTime");
-    const trs = document.querySelectorAll("tr.todo-item");
-    trs.forEach((tr) => {
-        const id = tr.id;
-        const item = todoList.find(id);
-        const remainTimeE = tr.querySelector("#js-td-remainTime");
-        if (!item || !remainTimeE) {
-            return;
-        }
-        const formatted = formatMillisec2HHMMSS(item.remainTime);
-        remainTimeE.textContent = formatted;
-    });
+    renderTodoTable();
 }, 1000);
