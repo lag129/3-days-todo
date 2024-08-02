@@ -29,11 +29,16 @@ formE.addEventListener("submit", (event) => {
     event.preventDefault();
     const inputTitleE = document.querySelector("#js-new-title");
     const inputStartDateTimeE = document.querySelector("#js-new-startDateTime");
-    const title = inputTitleE.value;
-    // const startDateTime = inputStartDateTimeE.value;
-    const item = new TodoItem({ title: title });
-    todoStorage.addTodoItem(item);
-    renderTodoTable();
+    // タイトルが入力されていない場合は何もしない
+    if (inputTitleE.value === "") {
+        return;
+    } else {
+        const title = inputTitleE.value;
+        // const startDateTime = inputStartDateTimeE.value;
+        const item = new TodoItem({ title: title });
+        todoStorage.addTodoItem(item);
+        renderTodoTable();
+    }
 });
 
 // // 開始日時の初期値を現在の日時に設定
