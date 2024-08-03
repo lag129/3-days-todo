@@ -1,6 +1,8 @@
 "use strict";
 import { TodoItem } from "./js/TodoItem.js";
 import { TodoStorage } from "./js/TodoStorage.js";
+import achivements from "./js/definition/achivements.js";
+
 import formatMillisec2HHMMSS from "./js/util/formatMillisec2HHMMSS.js";
 // import { CONSTANTS } from "./js/Constants";
 
@@ -16,10 +18,20 @@ const renderTodoTable = () => {
         .forEach((tr) => table.appendChild(tr));
 };
 
+const renderAchivements = () => {
+    console.debug("renderAchivements()");
+    const containerE = document.querySelector("div.achivement-container");
+    achivements.forEach((achivement) => {
+        const itemE = achivement.generateHTMLElement();
+        containerE.appendChild(itemE);
+    });
+};
+
 // ストレージに保存されているToDoリストを描画
 window.addEventListener("load", () => {
     console.log("load: renderTodoTable()");
     renderTodoTable();
+    renderAchivements();
 });
 
 // フォームの送信ボタンがクリックされたときの処理
@@ -61,7 +73,21 @@ setInterval(() => {
     console.debug("setInterval: update remainTime");
     renderTodoTable();
     countCompletedTodo();
+    checkAchivementIsCompleted();
 }, 1000);
+
+const checkAchivementIsCompleted = () => {
+    achivements.forEach((achivement) => {
+        // console.log(`check achivement: ${achivement.id}`);
+        if(achivement.checker()) {
+            // achivement.achive();
+            // console.log(`achivement: ${achivement.id}`);
+            const itemE = document.querySelector(`.achivement-container .item#${achivement.id}`);
+            itemE.classList.add("achived");
+            itemE.classList.remove("not-achived");
+        }
+    });
+}
 
 // 完了済みのToDoをカウント
 const countCompletedTodo = () => {
