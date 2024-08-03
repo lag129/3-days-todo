@@ -28,6 +28,7 @@
     
     .sidebar.active {
         right: 0;
+        position: static;
     }
 
     #js-humburger-menu {
