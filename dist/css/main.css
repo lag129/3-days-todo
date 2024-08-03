@@ -78,13 +78,52 @@
 .main td.todo-item-remainProgress {
     width: 20%;
     text-align: center;
-    progress::-webkit-progress-value {
-        background-color: #ffcc00;
+    progress {
+        height: 8px;
+        vertical-align: middle;
+        border-radius: 15px;
     }
+      
     progress::-webkit-progress-bar {
-        background-color: #f5f5f5;
+        border-radius: 15px;
     }
+    
+    progress::-moz-progress-bar {
+        border-radius: 15px;
+    }
+}
 
+.main td.todo-item-remainProgress.green {
+    progress::-webkit-progress-value {
+        border-radius: 15px;
+        background-color: green;
+    }
+    progress::-ms-fill {
+        border-radius: 15px;
+        background-color: green;
+    }
+}
+
+.main td.todo-item-remainProgress.yellowgreen {
+    progress::-webkit-progress-value {
+        border-radius: 15px;
+        background-color: yellowgreen;
+    }
+    progress::-ms-fill {
+        border-radius: 15px;
+        background-color: yellowgreen;
+    }
+}
+
+.main td.todo-item-remainProgress.red {
+    progress::-webkit-progress-value {
+        border-radius: 15px;
+        background-color: red;
+    }
+    progress::-ms-fill {
+        border-radius: 15px;
+        background-color: red;
+    }
 }
 
 .main td.todo-item-remove {
