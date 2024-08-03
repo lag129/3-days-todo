@@ -90,4 +90,7 @@
             background-color: maroon;
         }
     }
+    .progress-text {
+        font-size: 90px;
+    }
 }
