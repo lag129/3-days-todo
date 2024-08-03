@@ -8,13 +8,12 @@ const todoStorage = new TodoStorage();
 
 const renderTodoTable = () => {
     const table = document.querySelector("#js-todo-table");
-    const trs = todoStorage.loadTodoItems().map((item) => {
-        return item.generateTRElement();
-    });
     table.innerHTML = "";
-    trs.forEach((tr) => {
-        table.appendChild(tr);
-    });
+    // isRemovedがfalseのものだけを描画
+    const trs = todoStorage.loadTodoItems()
+        .filter((item) => !item.isRemoved)
+        .map((item) => item.generateTRElement())
+        .forEach((tr) => table.appendChild(tr));
 };
 
 // ストレージに保存されているToDoリストを描画

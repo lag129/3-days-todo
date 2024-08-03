@@ -7,6 +7,7 @@ import formatMillisec2HHMMSS from "./util/formatMillisec2HHMMSS.js";
  * @property {string} id
  * @property {string} title
  * @property {boolean} isCompleted
+ * @property {boolean} isRemoved
  * @property {Date} createdAt - 作成日時
  * @property {Date} deadlineAt - 締め切り日時
  */
@@ -20,6 +21,7 @@ export class TodoItem {
             id: Date.now().toString(),
             title: "TITLE",
             isCompleted: false,
+            isRemoved: false,
             createdAt: now,
             deadlineAt: new Date(now.getTime() + PERIOD_TO_DEADLINE_MSEC)
         }
@@ -29,6 +31,7 @@ export class TodoItem {
         this.id = merged.id;
         this.title = merged.title;
         this.isCompleted = merged.isCompleted;
+        this.isRemoved = merged.isRemoved;
         this.createdAt = merged.createdAt;
         this.deadlineAt = merged.deadlineAt;
     }
@@ -129,7 +132,8 @@ export class TodoItem {
                     const removeButton = document.createElement("button");
                     removeButton.textContent = "🗑️";
                     removeButton.addEventListener("click", () => {
-                        this.#storage.removeTodoItem(this.id); // ストレージから削除
+                        this.isRemoved = true; // 削除フラグを立てる
+                        this.#storage.updateTodoItem(this.id, this); // ストレージの内容を更新
                         tr.remove(); // 画面から削除
                     });
                     td.appendChild(removeButton);
