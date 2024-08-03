@@ -16,6 +16,15 @@ const renderTodoTable = () => {
         .filter((item) => !item.isRemoved)
         .map((item) => item.generateTRElement())
         .forEach((tr) => table.appendChild(tr));
+    
+    const trsExists = table.querySelector('tr') !== null;
+    const emptyTodoMessage = document.querySelector("#js-empty-todo-message");
+    emptyTodoMessage.textContent = "何も無いよ; ;";
+    if (!trsExists) {
+        emptyTodoMessage.style.display = "flex";
+    } else {
+        emptyTodoMessage.style.display = "none";
+    }
 };
 
 const renderAchivements = () => {
@@ -132,11 +141,11 @@ const countCompletedTodo = () => {
 
 async function openShareScreen() {
     const text = document.getElementById("js-count-completed");
-    const textString = `ToDoリストを使って、${text.textContent}個を達成しました！`
+    const textString = `3 Days ToDoを使って、${text.textContent}個を達成しました！`
     if (navigator.share) {
         try {
             await navigator.share({
-                title: 'ToDoリスト',
+                title: '3 Days ToDo',
                 text: textString,
                 url: location.href,
             });
