@@ -124,6 +124,15 @@ export class TodoItem {
                     const progress = document.createElement("progress");
                     progress.max = PERIOD_TO_DEADLINE_MSEC;
                     progress.value = this.remainTime;
+                    if (this.remainTime > 1000 * 60 * 60 * 24) { // 1日以上
+                        td.classList.add("green");
+                    } else if (this.remainTime > 1000 * 60 * 60) { // 1時間以上
+                        td.classList.add("yellowgreen");
+                    } else if (this.remainTime > 0) { // 1時間未満
+                        td.classList.add("red");
+                    } else {
+                        td.classList.add("gray");
+                    }
                     td.appendChild(progress);
                 }; break;
 
