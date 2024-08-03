@@ -12,7 +12,7 @@
     height: auto;
     aspect-ratio: 1 / 1;
     border-radius: 50%;
-    background: conic-gradient(#4caf50 0%, #4caf50 75%, #ddd 75%);
+    background: conic-gradient(#4caf50 0%, #bcd6bd 75%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -24,7 +24,7 @@
     width: 75%;
     height: 75%;
     border-radius: 50%;
-    background-color: white;
+    background-color: #f5f5f5;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -33,6 +33,6 @@
 
 .progress-text {
     position: absolute;
-    font-size: 3em;
+    font-size: 3vw;
     font-weight: bold;
 }

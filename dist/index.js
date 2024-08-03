@@ -84,7 +84,7 @@ const countCompletedTodo = () => {
 
     if (progressCircle && progressText) {
         const percentage = Math.min((countCompleted / totalTasks) * 100, 100);
-        progressCircle.style.background = `conic-gradient(#4caf50 ${percentage}%, #ddd ${percentage}%)`;
+        progressCircle.style.background = `conic-gradient(#4caf50 ${percentage}%, #bcd6bd ${percentage}%)`;
         //progressText.textContent = `${Math.round(percentage)}%`;
         progressText.textContent = `${countCompleted} / ${totalTasks}`;
     }
