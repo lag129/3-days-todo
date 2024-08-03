@@ -19,6 +19,17 @@
     margin-top: 20px;
 }
 
+.inner-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+}
+
 .progress-text {
     position: absolute;
     font-size: 3em;
