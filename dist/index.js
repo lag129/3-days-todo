@@ -62,10 +62,15 @@ setInterval(() => {
     countCompletedTodo();
 }, 1000);
 
+// 完了済みのToDoをカウント
 const countCompletedTodo = () => {
     let countCompleted = 0;
     const text = document.getElementById("js-count-completed");
+    const progressCircle = document.getElementById("js-progress-circle");
+    const progressText = document.getElementById("js-progress-text");
     const itemsJSON = todoStorage.loadTodoItems();
+    const totalTasks = 5; // 完了タスクの目標数
+
     if (itemsJSON) {
         itemsJSON.forEach((item) => {
             if (item.isCompleted) {
@@ -73,7 +78,15 @@ const countCompletedTodo = () => {
             }
         });
     }
+
     if (text) {
         text.textContent = "完了Todo: " + countCompleted;
+    }
+
+    if (progressCircle && progressText) {
+        const percentage = Math.min((countCompleted / totalTasks) * 100, 100);
+        progressCircle.style.background = `conic-gradient(#4caf50 ${percentage}%, #ddd ${percentage}%)`;
+        //progressText.textContent = `${Math.round(percentage)}%`;
+        progressText.textContent = `${countCompleted} / ${totalTasks}`;
     }
 };
