@@ -96,16 +96,18 @@ async function openShareScreen() {
     if (navigator.share) {
         try {
             const text = document.getElementById("js-count-completed");
+            const textString = `ToDoリストを使って、${text.textContent}個を達成しました！`
             await navigator.share({
                 title: 'ToDoリスト',
-                text: `ToDoリストを使って、${text.textContent}個を達成しました！`,
+                text: textString,
                 url: location.href,
             });
         } catch (e) {
             console.log(e.message);
         }
     } else {
-        alert('Web Share API が使えません');
+        navigator.clipboard.writeText(textString + " " + location.href);
+        alert("クリップボードにコピーしました!");
     }
 }
 document.getElementById('js-share-button').addEventListener('click', openShareScreen);
