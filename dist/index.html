@@ -15,6 +15,9 @@
         <div class="sidebar">
             <h1>ToDo リスト</h1>
             <br><h2 id="js-count-completed"></h2>
+            <div class="progress-circle" id="js-progress-circle">
+                <span class="progress-text" id="js-progress-text"></span>
+            </div>
             <footer>
                 <br><button id="js-share-button">共有</button>
             </footer>
@@ -25,7 +28,7 @@
                 <input
                     id="js-new-title"
                     type="text"
-                    placeholder="タイトルを入力"
+                    placeholder=" + タスクの追加"
                 />
                 <!-- <input
                     id="js-new-startDateTime"
