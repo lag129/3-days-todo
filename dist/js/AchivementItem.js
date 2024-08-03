@@ -32,7 +32,7 @@ export class AchivementItem {
         // .item
         const item = document.createElement("div");
         item.classList.add("item");
-        this.checker(); // アチーブメント達成条件をチェック. ここでisAchivedが変更される
+        this.isAchived = this.checker(); // アチーブメント達成条件をチェック
         item.classList.add(this.isAchived ? "achived" : "not-achived");
         item.id = this.id;
 

@@ -42,13 +42,19 @@ formE.addEventListener("submit", (event) => {
     const inputStartDateTimeE = document.querySelector("#js-new-startDateTime");
     // タイトルが入力されていない場合は何もしない
     if(inputTitleE.value === "") return;
-    const options = ((value) => {
-        if(value.startsWith("!DEBUG")) {
-            return JSON.parse(value.match(/!DEBUG\s(.*)/)[1]);
-        } else {
-            return {title: value};
+    let options;
+    // デバッグ用コマンド
+    if (inputTitleE.value.startsWith("!DEBUG")) {
+        const [_, subcommand, ...args] = inputTitleE.value.split(" ");
+        if (subcommand === "json") {
+            options = JSON.parse(args[0]);
+            return;
+        } else if (subcommand === "clear") {
+            todoStorage.clearTodoItems();
+            return;
         }
-    })(inputTitleE.value);
+    }
+    options = { title: inputTitleE.value };
     const item = new TodoItem(options);
     todoStorage.addTodoItem(item);
     renderTodoTable();
@@ -69,24 +75,30 @@ formE.addEventListener("submit", (event) => {
 // });
 
 // 1秒ごとに残り時間を更新
-setInterval(() => {
+setInterval(async () => {
     console.debug("setInterval: update remainTime");
     renderTodoTable();
     countCompletedTodo();
-    checkAchivementIsCompleted();
+    await checkAchivementIsCompleted();
 }, 1000);
 
-const checkAchivementIsCompleted = () => {
-    achivements.forEach((achivement) => {
-        // console.log(`check achivement: ${achivement.id}`);
-        if(achivement.checker()) {
-            // achivement.achive();
-            // console.log(`achivement: ${achivement.id}`);
-            const itemE = document.querySelector(`.achivement-container .item#${achivement.id}`);
-            itemE.classList.add("achived");
+const checkAchivementIsCompleted = async () => {
+    await achivements
+        .filter((achivement) => !achivement.isAchived && achivement.checker())
+        .forEach(async (achivement) => {
+            console.info(`achivement ${achivement.id} is completed!`);
+            achivement.isAchived = true;
+            const itemE = document.getElementById(achivement.id);
             itemE.classList.remove("not-achived");
-        }
-    });
+            itemE.classList.add("achived");
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+            return;
+        });
+    return;
 }
 
 // 完了済みのToDoをカウント

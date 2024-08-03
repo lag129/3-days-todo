@@ -82,4 +82,16 @@ export class TodoStorage {
         return this.#loadTodoItems();
     }
 
+    saveTodoItems(items) {
+        this.#saveTodoItems(items);
+    }
+
+    /**
+     * ストレージのデータを全て削除
+     * @returns {void}
+     */
+    clearTodoItems() {
+        this.#saveTodoItems([]);
+    }
+
 }
