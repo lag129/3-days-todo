@@ -36,3 +36,14 @@
     font-size: 3vw;
     font-weight: bold;
 }
+
+.share-button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
