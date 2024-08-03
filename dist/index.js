@@ -59,4 +59,21 @@ formE.addEventListener("submit", (event) => {
 setInterval(() => {
     console.debug("setInterval: update remainTime");
     renderTodoTable();
+    countCompletedTodo();
 }, 1000);
+
+const countCompletedTodo = () => {
+    let countCompleted = 0;
+    const text = document.getElementById("js-count-completed");
+    const itemsJSON = todoStorage.loadTodoItems();
+    if (itemsJSON) {
+        itemsJSON.forEach((item) => {
+            if (item.isCompleted) {
+                countCompleted++;
+            }
+        });
+    }
+    if (text) {
+        text.textContent = "完了Todo: " + countCompleted;
+    }
+};
