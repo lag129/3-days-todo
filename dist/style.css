@@ -1,12 +1,10 @@
 @import url(https://fonts.googleapis.com/earlyaccess/notosansjp.css);
 @import "./css/main.css";
 @import "./css/sidebar.css";
+@import "./css/responsive.css";
 
 .container {
     display: flex;
-    /* padding-left: 5%; */
-    padding-right: 5%;
-    /* padding: 5%; */
 }
 
 body {
