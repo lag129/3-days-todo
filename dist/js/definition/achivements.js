@@ -20,4 +20,13 @@ export default [
             return loaded.filter((item) => item.isCompleted).length >= 3;
         }
     }),
+    new AchivementItem({
+        id: "complete-count-6",
+        title: "6つ完了した",
+        description: "ToDoを6つ完了させる",
+        checker: (item) => {
+            const loaded = new TodoStorage().loadTodoItems();
+            return loaded.filter((item) => item.isCompleted).length >= 6;
+        }
+    }),
 ]
