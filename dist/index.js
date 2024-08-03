@@ -93,10 +93,10 @@ const countCompletedTodo = () => {
 };
 
 async function openShareScreen() {
+    const text = document.getElementById("js-count-completed");
+    const textString = `ToDoリストを使って、${text.textContent}個を達成しました！`
     if (navigator.share) {
         try {
-            const text = document.getElementById("js-count-completed");
-            const textString = `ToDoリストを使って、${text.textContent}個を達成しました！`
             await navigator.share({
                 title: 'ToDoリスト',
                 text: textString,
