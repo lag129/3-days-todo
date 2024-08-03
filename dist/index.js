@@ -13,11 +13,19 @@ const renderTodoTable = () => {
     table.innerHTML = "";
     // isRemovedがfalseのものだけを描画
     const trsNot = todoStorage.loadTodoItems()
-        .filter((item) => !item.isRemoved)
+        .filter((item) => !item.isRemoved && !item.isCompleted)
         .map((item) => item.generateTRElement())
         .forEach((tr) => table.appendChild(tr));
     
-    const trsExists = table.querySelector('tr') !== null;
+    // 完了済みのものだけを描画
+    const tableCompleted = document.querySelector("#js-todo-table-completed");
+    tableCompleted.innerHTML = "";
+    const trsCompleted = todoStorage.loadTodoItems()
+        .filter((item) => !item.isRemoved && item.isCompleted)
+        .map((item) => item.generateTRElement())
+        .forEach((tr) => tableCompleted.appendChild(tr));
+    
+    const trsExists = table.querySelector('tr') !== null || tableCompleted.querySelector('tr') !== null;
     const emptyTodoMessage = document.querySelector("#js-empty-todo-message");
     emptyTodoMessage.textContent = "何も無いよ; ;";
     if (!trsExists) {

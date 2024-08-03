@@ -143,7 +143,7 @@ export class TodoItem {
                     removeButton.addEventListener("click", () => {
                         this.isRemoved = true; // 削除フラグを立てる
                         this.#storage.updateTodoItem(this.id, this); // ストレージの内容を更新
-                        tr.remove(); // 画面から削除
+                        document.getElementById(this.id).remove(); // 画面から削除
                     });
                     td.appendChild(removeButton);
                 }; break;
