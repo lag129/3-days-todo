@@ -1,0 +1,9 @@
+.sidebar {
+    width: 20%;
+    padding: 2%;
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+    background-color: bisque;
+    height: 100vh;
+}

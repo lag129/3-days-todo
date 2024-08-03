@@ -11,20 +11,27 @@
 </head>
 
 <body>
-    <h2>ToDoリスト</h2>
-    <form id="js-new-form">
-        <input
-            id="js-new-title"
-            type="text"
-            placeholder="タイトルを入力"
-        />
-        <!-- <input
-            id="js-new-startDateTime"
-            type="datetime-local"
-            placeholder="開始日時"
-        /> -->
-    </form>
-    <table id="js-todo-table">
-    </table>
+    <div class="container">
+        <div class="sidebar">
+            <h1>ToDo リスト</h1>
+        </div>
+        <div class="main">
+            <h2>ToDoリスト</h2>
+            <form id="js-new-form">
+                <input
+                    id="js-new-title"
+                    type="text"
+                    placeholder="タイトルを入力"
+                />
+                <!-- <input
+                    id="js-new-startDateTime"
+                    type="datetime-local"
+                    placeholder="開始日時"
+                /> -->
+            </form>
+            <table id="js-todo-table">
+            </table>
+        </div>
+    </div>
     <script type="module" src="index.js"></script>
 </body>
