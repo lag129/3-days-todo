@@ -42,7 +42,7 @@
     margin-top: 20px;
     padding: 10px;
     background-color: #4caf50;
-    color: white;
+    color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -84,9 +84,11 @@
 }
 
 .achivement-container .item.achived {
-    background-color: #6e6;
+    background-color: #4caf50;
+    color:#fff;
 }
 
 .achivement-container .item.not-achived {
     background-color: #666;
+    color: #fff;
 }
