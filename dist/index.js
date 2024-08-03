@@ -108,3 +108,12 @@ async function openShareScreen() {
     }
 }
 document.getElementById('js-share-button').addEventListener('click', openShareScreen);
+
+document.addEventListener('DOMContentLoaded', () => {
+    const hamburgerButton = document.getElementById('js-hamburger-button');
+    const sidebar = document.querySelector('.sidebar');
+
+    hamburgerButton.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+    });
+});

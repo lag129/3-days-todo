@@ -6,6 +6,10 @@
     padding-left: 2%;
 }
 
+#js-humburger-menu {
+    display: none;
+}
+
 .main form {
     input[type="text"] {
         width: 100%;
