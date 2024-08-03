@@ -122,7 +122,7 @@ export class TodoItem {
                 case "REMAIN_PROGRESS": {
                     td.classList.add("todo-item-remainProgress");
                     const progress = document.createElement("progress");
-                    progress.max = PERIOD_TO_DEADLINE_MSEC;
+                    progress.max = this.deadlineAt.getTime() - this.createdAt.getTime();
                     progress.value = this.remainTime;
                     if (this.remainTime > 1000 * 60 * 60 * 24) { // 1日以上
                         td.classList.add("green");

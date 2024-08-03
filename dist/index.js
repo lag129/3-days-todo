@@ -10,7 +10,7 @@ const renderTodoTable = () => {
     const table = document.querySelector("#js-todo-table");
     table.innerHTML = "";
     // isRemovedがfalseのものだけを描画
-    const trs = todoStorage.loadTodoItems()
+    const trsNot = todoStorage.loadTodoItems()
         .filter((item) => !item.isRemoved)
         .map((item) => item.generateTRElement())
         .forEach((tr) => table.appendChild(tr));
@@ -29,15 +29,17 @@ formE.addEventListener("submit", (event) => {
     const inputTitleE = document.querySelector("#js-new-title");
     const inputStartDateTimeE = document.querySelector("#js-new-startDateTime");
     // タイトルが入力されていない場合は何もしない
-    if (inputTitleE.value === "") {
-        return;
-    } else {
-        const title = inputTitleE.value;
-        // const startDateTime = inputStartDateTimeE.value;
-        const item = new TodoItem({ title: title });
-        todoStorage.addTodoItem(item);
-        renderTodoTable();
-    }
+    if(inputTitleE.value === "") return;
+    const options = ((value) => {
+        if(value.startsWith("!DEBUG")) {
+            return JSON.parse(value.match(/!DEBUG\s(.*)/)[1]);
+        } else {
+            return {title: value};
+        }
+    })(inputTitleE.value);
+    const item = new TodoItem(options);
+    todoStorage.addTodoItem(item);
+    renderTodoTable();
 });
 
 // // 開始日時の初期値を現在の日時に設定
@@ -91,19 +93,21 @@ const countCompletedTodo = () => {
 };
 
 async function openShareScreen() {
+    const text = document.getElementById("js-count-completed");
+    const textString = `ToDoリストを使って、${text.textContent}個を達成しました！`
     if (navigator.share) {
         try {
-            const text = document.getElementById("js-count-completed");
             await navigator.share({
                 title: 'ToDoリスト',
-                text: `ToDoリストを使って、${text.textContent}個を達成しました！`,
+                text: textString,
                 url: location.href,
             });
         } catch (e) {
             console.log(e.message);
         }
     } else {
-        alert('Web Share API が使えません');
+        navigator.clipboard.writeText(textString + " " + location.href);
+        alert("クリップボードにコピーしました!");
     }
 }
 document.getElementById('js-share-button').addEventListener('click', openShareScreen);
