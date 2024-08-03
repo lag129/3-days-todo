@@ -127,7 +127,7 @@ export class TodoItem {
                 case "REMOVE_BUTTON": {
                     td.classList.add("todo-item-remove");
                     const removeButton = document.createElement("button");
-                    removeButton.textContent = "削除";
+                    removeButton.textContent = "🗑️";
                     removeButton.addEventListener("click", () => {
                         this.#storage.removeTodoItem(this.id); // ストレージから削除
                         tr.remove(); // 画面から削除
