@@ -125,7 +125,7 @@ const countCompletedTodo = () => {
     const progressCircle = document.getElementById("js-progress-circle");
     const progressText = document.getElementById("js-progress-text");
     const itemsJSON = todoStorage.loadTodoItems();
-    const totalTasks = 5; // 完了タスクの目標数
+    const totalTasks = 3; // 完了タスクの目標数
 
     if (itemsJSON) {
         itemsJSON.forEach((item) => {
@@ -135,18 +135,36 @@ const countCompletedTodo = () => {
         });
     }
 
-    if (text) {
-        text.textContent = "完了Todo: " + countCompleted;
+    if (countCompleted >= totalTasks) {
+        if (!localStorage.getItem('alertShown')) {
+            setTimeout(() => {
+                //alert("目標タスク数を超えました！カウントをリセットします。");
+                countCompleted = 0; // リセット
+                localStorage.setItem('alertShown', 'true');
+                updateDisplay();
+            }, 0); // 3秒後にアラートを表示
+        }
+    } else {
+        localStorage.removeItem('alertShown');
+        updateDisplay();
     }
+    
+    function updateDisplay() {
+        if (text) {
+            text.textContent = "完了Todo: " + countCompleted;
+        }
 
-    if (progressCircle && progressText) {
-        const percentage = Math.min((countCompleted / totalTasks) * 100, 100);
-        progressCircle.style.background = `conic-gradient(#4caf50 ${percentage}%, #bcd6bd ${percentage}%)`;
-        //progressText.textContent = `${Math.round(percentage)}%`;
-        progressText.textContent = `${countCompleted} / ${totalTasks}`;
+        // 円形プログレスバーの更新 
+        if (progressCircle && progressText) {
+            const percentage = Math.min((countCompleted / totalTasks) * 100, 100);
+            progressCircle.style.background = `conic-gradient(#4caf50 ${percentage}%, #bcd6bd ${percentage}%)`;
+            //progressText.textContent = `${Math.round(percentage)}%`;
+            progressText.textContent = `${countCompleted} / ${totalTasks}`;
+        }
     }
-};
+}
 
+// シェアボタンをクリックしたときの処理
 async function openShareScreen() {
     const text = document.getElementById("js-count-completed");
     const textString = `3 Days ToDoを使って、${text.textContent}個を達成しました！`
