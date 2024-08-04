@@ -126,27 +126,9 @@ const countCompletedTodo = () => {
     const itemsJSON = todoStorage.loadTodoItems();
     //const totalTasks = itemsJSON.length; // totalTasksを設定
 
-    // 初期化
-    let countCompleted = 0;
-    let totalTasks = 0;
-
-    // (not 完了された) and (削除された) ToDoを除外
-    //const totalTasks = itemsJSON.filter((item) => !item.isCompleted && !item.isRemoved).length;
-
-    if (itemsJSON) {
-        itemsJSON.forEach((item) => {
-    //         return item.isCompleted || !item.isRemoved;
-    //     }).length;
-
-    //     countCompleted = itemsJSON.filter((item) => item.isCompleted).length;
-            if (!item.isCompleted && !item.isRemoved) {
-                totalTasks++;
-            }
-            if (item.isCompleted) {
-                countCompleted++;
-            }
-        });
-    }
+    // 完了済み & 未削除 / 未完了 & 未削除 のタスク数をカウント
+    const countCompleted = itemsJSON.filter((item) => item.isCompleted && !item.isRemoved).length;
+    const totalTasks = itemsJSON.filter((item) => !item.isRemoved).length;
 
     if (text) {
         text.textContent = "完了Todo: " + countCompleted;
