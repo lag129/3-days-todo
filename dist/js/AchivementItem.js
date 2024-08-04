@@ -31,10 +31,11 @@ export class AchivementItem {
     generateHTMLElement() {
         const item = document.createElement("div"); // .item要素を作成
         item.classList.add("item");
-        this.checker(); // アチーブメント達成条件をチェック. ここでisAchivedが変更される
+        this.isAchived = this.checker(); // アチーブメント達成条件をチェック
         item.classList.add(this.isAchived ? "achived" : "not-achived"); // 達成状態に応じてクラスを追加
         item.id = this.id; // 要素のIDを設定
 
+        // .item .top
         const top = document.createElement("div"); // .top要素を作成
         top.classList.add("top");
         const icon = document.createElement("div"); // アイコン要素を作成

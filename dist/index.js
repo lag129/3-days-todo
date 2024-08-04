@@ -16,6 +16,15 @@ const renderTodoTable = () => {
         .filter((item) => !item.isRemoved)
         .map((item) => item.generateTRElement())
         .forEach((tr) => table.appendChild(tr));
+    
+    const trsExists = table.querySelector('tr') !== null;
+    const emptyTodoMessage = document.querySelector("#js-empty-todo-message");
+    emptyTodoMessage.textContent = "何も無いよ; ;";
+    if (!trsExists) {
+        emptyTodoMessage.style.display = "flex";
+    } else {
+        emptyTodoMessage.style.display = "none";
+    }
 };
 
 const renderAchivements = () => {
@@ -42,13 +51,19 @@ formE.addEventListener("submit", (event) => {
     const inputStartDateTimeE = document.querySelector("#js-new-startDateTime");
     // タイトルが入力されていない場合は何もしない
     if(inputTitleE.value === "") return;
-    const options = ((value) => {
-        if(value.startsWith("!DEBUG")) {
-            return JSON.parse(value.match(/!DEBUG\s(.*)/)[1]);
-        } else {
-            return {title: value};
+    let options;
+    // デバッグ用コマンド
+    if (inputTitleE.value.startsWith("!DEBUG")) {
+        const [_, subcommand, ...args] = inputTitleE.value.split(" ");
+        if (subcommand === "json") {
+            options = JSON.parse(args[0]);
+            return;
+        } else if (subcommand === "clear") {
+            todoStorage.clearTodoItems();
+            return;
         }
-    })(inputTitleE.value);
+    }
+    options = { title: inputTitleE.value };
     const item = new TodoItem(options);
     todoStorage.addTodoItem(item);
     renderTodoTable();
@@ -69,24 +84,30 @@ formE.addEventListener("submit", (event) => {
 // });
 
 // 1秒ごとに残り時間を更新
-setInterval(() => {
+setInterval(async () => {
     console.debug("setInterval: update remainTime");
     renderTodoTable();
     countCompletedTodo();
-    checkAchivementIsCompleted();
+    await checkAchivementIsCompleted();
 }, 1000);
 
-const checkAchivementIsCompleted = () => {
-    achivements.forEach((achivement) => {
-        // console.log(`check achivement: ${achivement.id}`);
-        if(achivement.checker()) {
-            // achivement.achive();
-            // console.log(`achivement: ${achivement.id}`);
-            const itemE = document.querySelector(`.achivement-container .item#${achivement.id}`);
-            itemE.classList.add("achived");
+const checkAchivementIsCompleted = async () => {
+    await achivements
+        .filter((achivement) => !achivement.isAchived && achivement.checker())
+        .forEach(async (achivement) => {
+            console.info(`achivement ${achivement.id} is completed!`);
+            achivement.isAchived = true;
+            const itemE = document.getElementById(achivement.id);
             itemE.classList.remove("not-achived");
-        }
-    });
+            itemE.classList.add("achived");
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+            return;
+        });
+    return;
 }
 
 // 完了済みのToDoをカウント
@@ -138,11 +159,11 @@ const countCompletedTodo = () => {
 // シェアボタンをクリックしたときの処理
 async function openShareScreen() {
     const text = document.getElementById("js-count-completed");
-    const textString = `ToDoリストを使って、${text.textContent}個を達成しました！`
+    const textString = `3 Days ToDoを使って、${text.textContent}個を達成しました！`
     if (navigator.share) {
         try {
             await navigator.share({
-                title: 'ToDoリスト',
+                title: '3 Days ToDo',
                 text: textString,
                 url: location.href,
             });
