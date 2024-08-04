@@ -125,7 +125,7 @@ const countCompletedTodo = () => {
     const progressCircle = document.getElementById("js-progress-circle");
     const progressText = document.getElementById("js-progress-text");
     const itemsJSON = todoStorage.loadTodoItems();
-    const totalTasks = 5; // 完了タスクの目標数
+    const totalTasks = itemsJSON.length; // totalTasksを設定
 
     if (itemsJSON) {
         itemsJSON.forEach((item) => {
@@ -140,7 +140,7 @@ const countCompletedTodo = () => {
     }
 
     if (progressCircle && progressText) {
-        const percentage = Math.min((countCompleted / totalTasks) * 100, 100);
+        const percentage = totalTasks > 0 ? Math.min((countCompleted / totalTasks) * 100, 100) : 0;
         progressCircle.style.background = `conic-gradient(#4caf50 ${percentage}%, #bcd6bd ${percentage}%)`;
         //progressText.textContent = `${Math.round(percentage)}%`;
         progressText.textContent = `${countCompleted} / ${totalTasks}`;
