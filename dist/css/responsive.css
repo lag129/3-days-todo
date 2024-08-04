@@ -98,4 +98,15 @@
     .progress-text {
         font-size: 90px;
     }
+
+    #responsive-header {
+        display: flex;
+        width: 50%;
+        padding-top: 5%;
+        padding-left: 5%;
+    }
+
+    #responsive-header.active {
+        display: none;
+    }
 }
