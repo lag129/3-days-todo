@@ -157,6 +157,18 @@ const countCompletedTodo = () => {
         progressCircle.style.background = `conic-gradient(#4caf50 ${percentage}%, #bcd6bd ${percentage}%)`;
         //progressText.textContent = `${Math.round(percentage)}%`;
         progressText.textContent = `${countCompleted} / ${totalTasks}`;
+        
+        // 100%達成時の処理
+        // - N / Mのテキスト色を白に変更
+        if (percentage >= 100) {
+            const innerE = document.querySelector(".inner-circle");
+            innerE.style["background-color"] = "#4caf50";
+            document.querySelector("#js-progress-text").style.color = "#fff";
+        } else {
+            const innerE = document.querySelector(".inner-circle");
+            innerE.style["background-color"] = "#fff";
+            document.querySelector("#js-progress-text").style.color = "#000";
+        }
     }
 };
 
