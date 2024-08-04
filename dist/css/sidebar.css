@@ -91,3 +91,7 @@
     background-color: #666;
     color: #fff;
 }
+
+#responsive-header {
+    display: none;
+}
