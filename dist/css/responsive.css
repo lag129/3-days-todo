@@ -40,6 +40,10 @@
         z-index: 100;
     }
 
+    header {
+        width: 50%;
+    }
+
     .main td.todo-item-completion {
         width: 10%;
         text-align: center;
