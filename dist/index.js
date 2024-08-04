@@ -120,15 +120,28 @@ const checkAchivementIsCompleted = async () => {
 
 // 完了済みのToDoをカウント
 const countCompletedTodo = () => {
-    let countCompleted = 0;
     const text = document.getElementById("js-count-completed");
     const progressCircle = document.getElementById("js-progress-circle");
     const progressText = document.getElementById("js-progress-text");
     const itemsJSON = todoStorage.loadTodoItems();
-    const totalTasks = itemsJSON.length; // totalTasksを設定
+    //const totalTasks = itemsJSON.length; // totalTasksを設定
+
+    // 初期化
+    let countCompleted = 0;
+    let totalTasks = 0;
+
+    // (not 完了された) and (削除された) ToDoを除外
+    //const totalTasks = itemsJSON.filter((item) => !item.isCompleted && !item.isRemoved).length;
 
     if (itemsJSON) {
         itemsJSON.forEach((item) => {
+    //         return item.isCompleted || !item.isRemoved;
+    //     }).length;
+
+    //     countCompleted = itemsJSON.filter((item) => item.isCompleted).length;
+            if (!item.isCompleted && !item.isRemoved) {
+                totalTasks++;
+            }
             if (item.isCompleted) {
                 countCompleted++;
             }
