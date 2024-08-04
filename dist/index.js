@@ -170,8 +170,10 @@ document.getElementById('js-share-button').addEventListener('click', openShareSc
 document.addEventListener('DOMContentLoaded', () => {
     const hamburgerButton = document.getElementById('js-hamburger-button');
     const sidebar = document.querySelector('.sidebar');
+    const responsiveHeader = document.querySelector('#responsive-header');
 
     hamburgerButton.addEventListener('click', () => {
         sidebar.classList.toggle('active');
+        responsiveHeader.classList.toggle('active');
     });
 });
