@@ -14,6 +14,6 @@ jsを使った処理、プロジェクト管理、スライド作成などです
 ## 工夫した点
 他のToDoアプリには無いような絵文字機能やプログレスサークルなど特徴的な機能を実装したことです。
 ## 発表スライド
-https://docs.google.com/presentation/d/1KXEfmxAq34Zqy0pYuKieybmh4bpbIh-KbS9OCWUA13s/edit?usp=sharing
+https://speakerdeck.com/aokidai27/ji-yu-camphatukason-vol-dot-11-fa-biao-zi-liao-3-daystodo
 ## プロジェクト管理(notion)
 https://peppermint-space-c55.notion.site/20ff93e0f4e34fbd92f0a3cd6cb5ea5e?pvs=4
